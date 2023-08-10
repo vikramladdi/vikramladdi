@@ -1,0 +1,17 @@
+const connectDB = require('./db');
+const express = require('express')
+const app = express()
+const port = 4000
+connectDB();
+
+//API end points
+const authRouter = require('./routes/auth');
+const notesRouter = require('./routes/notes');
+app.use('/api/auth',authRouter);
+app.use('/api/notes',notesRouter);
+
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
+ 
