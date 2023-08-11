@@ -10,7 +10,9 @@ router.post('/', [
     body('email','enter valid and unique email').isEmail(),
     body('password').isLength({ min: 5 })
     ],
+
     async (req, res) => {
+
         console.log(req.body);
         //res.send(req.body);
         //res.json({requestBody: req.body}) 
@@ -35,6 +37,7 @@ router.post('/', [
         // .catch(err => {
         //   res.status(400).send(err.message);
         // });
+
     })
 
 module.exports = router;
