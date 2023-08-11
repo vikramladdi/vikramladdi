@@ -28,7 +28,6 @@ router.post('/', [
         return res.status(400).send(err.message)
       }
 
-      
         // .then(item => { 
         //   //res.send("item saved to database");
         //   res.status(200).json({ data:myData,message: 'item saved to database' });
