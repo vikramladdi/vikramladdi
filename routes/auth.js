@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const User = require('../models/Users');
 const { body, validationResult } = require('express-validator');
 
@@ -21,22 +23,33 @@ router.post('/', [
 
         let email = await User.findOne({email:req.body.email});
         if(email) return res.status(400).send({error:"duplicate email is not allow"})
-        
+
+        const jwt_secret= "vikramjeet@developer";
+       
       try{
-        const myData = await new User(req.body);
-        const result = myData.save()
-        res.status(200).send(myData)
+
+        const salt = bcrypt.genSaltSync(10);
+        const hash = await bcrypt.hashSync(req.body.password, salt);
+
+        const myData = await User.create({
+          name:req.body.name,
+          email:req.body.email,
+          password:hash
+        });
+
+        const data = {
+          user:{
+            id:myData.id
+          }
+        }
+        const authtoken = jwt.sign(data, jwt_secret);
+        //console.log(token);
+
+        res.json({authtoken});
+        
       }catch(err){
         return res.status(400).send(err.message)
       }
-
-        // .then(item => { 
-        //   //res.send("item saved to database");
-        //   res.status(200).json({ data:myData,message: 'item saved to database' });
-        // })
-        // .catch(err => {
-        //   res.status(400).send(err.message);
-        // });
 
     })
 
