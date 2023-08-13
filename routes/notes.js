@@ -83,7 +83,6 @@ router.put('/updatenote/:id',fetchUser, async (req,res)=>{
 
         const checkUpdate = await Note.findByIdAndUpdate(req.params.id,updateNote,{new:true})
 
-
         res.status(200).send({data:checkUpdate,message:`note Id {${checkUpdate._id}} successfully updated`});
 
     } catch (error) {
