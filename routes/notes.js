@@ -54,7 +54,7 @@ router.get('/fetchallnotes',fetchUser, async (req,res)=>{
 })
 
 /***
- * @Get Route 3: update note end point:Login User //api/notes//updatenote/:id
+ * @Put Route 3: update note end point:Login User //api/notes//updatenote/:id
  */
 router.put('/updatenote/:id',fetchUser, async (req,res)=>{
      
@@ -91,4 +91,34 @@ router.put('/updatenote/:id',fetchUser, async (req,res)=>{
     }
 })
 
+
+/***
+ * @Delete Route 4: Delete note end point:Login User //api/notes/delete/:id
+ */
+router.delete('/delete/:id',fetchUser, async (req,res)=>{
+     
+    try {
+
+        //Find the note by Note table id
+        let note = await Note.findById(req.params.id);
+        if(!note){res.status(404).send('Not found')}
+
+        //get User by (fetchUser) middleware OR token auth
+        const userdata = req.user;
+        //console.log(userdata.id)
+
+        //check note of reated to User
+        if(note.user.toString() !== userdata.id){
+            res.status(401).send("Not Allowed")
+        }
+
+        const checkUpdate = await Note.findByIdAndDelete(req.params.id)
+
+
+        res.status(200).send({data:checkUpdate,message:`note Id {${checkUpdate._id}} successfully Deleted`});
+
+    } catch (error) {
+        res.status(500).json({error:error.message})
+    }
+})
 module.exports = router;
