@@ -76,6 +76,7 @@ router.put('/updatenote/:id',fetchUser, async (req,res)=>{
         const userdata = req.user;
         //console.log(userdata.id)
 
+        //check note of reated to User
         if(note.user.toString() !== userdata.id){
             res.status(401).send("Not Allowed")
         }
