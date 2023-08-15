@@ -1,11 +1,13 @@
 const connectDB = require('./db');
 const express = require('express')
+var cors = require('cors')
 const app = express()
 const port = 5000
 connectDB();
 
 
 //API end points
+app.use(cors());
 app.use(express.json()) 
 const authRouter = require('./routes/auth');
 const notesRouter = require('./routes/notes');
