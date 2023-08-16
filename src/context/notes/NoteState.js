@@ -4,90 +4,64 @@ import noteContext from './noteContext'
 
 export default function NoteState(props) {
 
-  let inotebook = [
-    {
-      "_id": "64d780e14a5cd77edcd46692",
-      "user": "64d72efcce99689ad25464e7",
-      "title": "Title 1",
-      "description": "Description walk up full stack",
-      "tag": "personal",
-      "date": "2023-08-12T12:53:53.209Z",
-      "__v": 0
-    },
-    {
-      "_id": "64d787a6e67bda0db97e6393c",
-      "user": "64d72efcce99689ad25464e7",
-      "title": "Title 1",
-      "description": "Description walk up full stack",
-      "tag": "personal",
-      "date": "2023-08-12T13:22:46.774Z",
-      "__v": 0
-    },
-    {
-      "_id": "64d780e14a5cd77edcd46649c",
-      "user": "64d72efcce99689ad25464e7",
-      "title": "Title 1",
-      "description": "Description walk up full stack",
-      "tag": "personal",
-      "date": "2023-08-12T12:53:53.209Z",
-      "__v": 0
-    },
-    {
-      "_id": "64d787a6e67bda0db597e639c",
-      "user": "64d72efcce99689ad25464e7",
-      "title": "Title 1",
-      "description": "Description walk up full stack",
-      "tag": "personal",
-      "date": "2023-08-12T13:22:46.774Z",
-      "__v": 0
-    }, {
-      "_id": "64d780e14a54cd77edcd4669c",
-      "user": "64d72efcce99689ad25464e7",
-      "title": "Title 1",
-      "description": "Description walk up full stack",
-      "tag": "personal",
-      "date": "2023-08-12T12:53:53.209Z",
-      "__v": 0
-    },
-    {
-      "_id": "64d2787a6e67bda0db97e639c",
-      "user": "64d72efcce99689ad25464e7",
-      "title": "Title 1",
-      "description": "Description walk up full stack",
-      "tag": "personal",
-      "date": "2023-08-12T13:22:46.774Z",
-      "__v": 0
-    },
-    {
-      "_id": "64d780e314a5cd77edcd4669c",
-      "user": "64d72efcce99689ad25464e7",
-      "title": "Title 1",
-      "description": "Description walk up full stack",
-      "tag": "personal",
-      "date": "2023-08-12T12:53:53.209Z",
-      "__v": 0
-    }
-  ];
+  const backendhost = "http://localhost:5000";
+
+  let inotebook = [];
 
   const [notes, setNotes] = useState(inotebook);
 
+  const fetchNotes = async () => {
+    const fetchurl = `${backendhost}/api/notes/fetchallnotes`;
+
+    try {
+      const responce = await fetch(fetchurl, {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+          'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRkNzJlZmNjZTk5Njg5YWQyNTQ2NGU3In0sImlhdCI6MTY5MTgyNjMwOH0.DuJclZTi79qLjXaWB7yzXmH7ivmsn8nHUvGeBTmxwTc'
+        }
+      });
+
+      const json = await responce.json();
+      console.log(json.data)
+
+      setNotes(json.data);
+
+    } catch (error) {
+      console.log({ error: error })
+    }
+
+  }
+
   //add Note function to Add note
-  const addNote = ({title, description, tag}) => {
+  const addNote = async (inputs) => {
     console.log("Adding a note");
-    const inote = {
-      "_id": "64d787a66e67bda0db97e6339c",
-      "user": "64d72efcce99689ad25464e7",
-      "title": title,
-      "description": description,
-      "tag": tag,
-      "date": "2023-08-12T13:22:46.774Z",
-      "__v": 0
-    };
+    const fetchurl = `${backendhost}/api/notes/createnote`;
 
-    setNotes(notes.concat(inote))
+    try {
+      const responce = await fetch(fetchurl, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRkNzJlZmNjZTk5Njg5YWQyNTQ2NGU3In0sImlhdCI6MTY5MTgyNjMwOH0.DuJclZTi79qLjXaWB7yzXmH7ivmsn8nHUvGeBTmxwTc'
+        },
+        body: JSON.stringify({
+          title:inputs.title,
+          description:inputs.description,
+          tag:inputs.tag
+        })
+      });
 
-    //setTimeout(()=>{console.log(notes)},2000)
-    
+      const json = await responce.json();
+      console.log(json.data)
+
+    } catch (error) {
+      console.log({ error: error })
+    }
+
+
+   //setTimeout(()=>{console.log(inputs)},2000)
+
   }
 
   //Edit Note
@@ -96,15 +70,35 @@ export default function NoteState(props) {
   }
 
   //Delete Note
-  const deleteNote = (id) => {
-    console.log("delete id"+' '+id);
+  const deleteNote = async (id) => {
+    //console.log("delete id" + ' ' + id);
 
-    setNotes(notes.filter((data)=>data._id!==id))
+    const fetchurl = `${backendhost}/api/notes/delete/${id}`;
 
+    try {
+      const responce = await fetch(fetchurl, {
+        method: 'DELETE',
+        headers: {
+          'Content-type': 'application/json',
+          'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRkNzJlZmNjZTk5Njg5YWQyNTQ2NGU3In0sImlhdCI6MTY5MTgyNjMwOH0.DuJclZTi79qLjXaWB7yzXmH7ivmsn8nHUvGeBTmxwTc'
+        }
+      });
+
+      const json = await responce.json();
+
+      //Delete notes form state
+      setNotes(notes.filter((data) => data._id !== id))
+
+      console.log(json.data)
+
+    } catch (error) {
+       console.log({error});
+    }
+    
   }
 
   return (
-    <noteContext.Provider value={{ notes, addNote, editNote, deleteNote }}>
+    <noteContext.Provider value={{ notes, addNote, editNote, deleteNote, fetchNotes }}>
       {props.children}
     </noteContext.Provider>
   )

@@ -15,7 +15,7 @@ export default function AddNotes() {
         //destruture
         const {name,value} = event.target;
 
-        setInputs({ ...input, [name]: [value]} )
+        setInputs({ ...input, [name]: value} )
 
     }
 
@@ -37,6 +37,10 @@ export default function AddNotes() {
                 <div className="mb-3">
                     <label htmlFor="description" className="form-label">Description</label>
                     <input type="text" className="form-control" onChange={handleChange}  id="description" name="description" />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="tag" className="form-label">Tag</label>
+                    <input type="text" className="form-control" onChange={handleChange}  id="tag" name="tag" />
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={handleClick}>Submit</button>
             </form>
