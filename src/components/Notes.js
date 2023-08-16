@@ -9,7 +9,7 @@ export default function Notes() {
     const context = useContext(noteContext);
 
     //de-structiring variable to we don't use like context.notes OR context.setNotes in notes
-    const { notes, fetchNotes } = context;
+    const { notes, fetchNotes, editNotefunc } = context;
     
     const [editNote,setEditNote] = useState({title:"",description:"",tag:""});
 
@@ -28,7 +28,10 @@ export default function Notes() {
 
         e.preventDefault();
 
-        console.log("update note",editNote)
+        //console.log("update note",editNote)
+
+        //send all data to editNote Funtion end point in NoteState.js
+        editNotefunc(editNote);
     }
 
     const editModel = (data) => {
@@ -65,7 +68,7 @@ export default function Notes() {
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary" onClick={handleClick}>Save changes</button>
+                                <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={handleClick}>Save changes</button>
                             </div>
                         </div>
                     </div>
