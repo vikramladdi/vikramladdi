@@ -68,7 +68,7 @@ export default function Notes() {
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={handleClick}>Save changes</button>
+                                <button type="button" disabled={(editNote.title.length<=5 || editNote.description.length<=10)?true:false} className="btn btn-primary" data-bs-dismiss="modal" onClick={handleClick}>{(editNote.title.length<=5 || editNote.description.length)<=10?'Fill valid form then Submit':'Update changes'}</button>
                             </div>
                         </div>
                     </div>

@@ -1,7 +1,9 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useRef } from 'react'
 import noteContext from '../context/notes/noteContext';
 
 export default function AddNotes() {
+
+    const formRef = useRef(null)
 
     const context =  useContext(noteContext);
     
@@ -22,14 +24,25 @@ export default function AddNotes() {
     const handleClick = (e) => {
         e.preventDefault();
 
+        if((input.title.length)<=5){
+            alert('Invalid Form, minimum 5 character required')
+            return false;
+        }
+
+        if((input.description.length)<=10){
+            alert('Invalid Form, min 10 character required')
+            return false;
+        }
+
         //Send all form data to funtion addNote() that we set on NoteState.js
         addNote(input);
+        formRef.current.reset();
     }
 
     return (
         <div>
             <h2 className="text-center">Create Note</h2>
-            <form>
+            <form ref={formRef}>
                 <div className="mb-3">
                     <label htmlFor="title" className="form-label">Title</label>
                     <input type="text" className="form-control"  onChange={handleChange}  id="title" name="title" />
