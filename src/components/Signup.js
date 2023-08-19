@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 
-export default function Signup() {
+export default function Signup(props) {
+  const {showAlert} = props
 
   const navigate = useNavigate();
 
@@ -36,13 +37,15 @@ export default function Signup() {
         if (jsondata.success) {
           localStorage.setItem('token', jsondata.authtoken)
           navigate('/');
+          showAlert({type:'success',message:'Login successfully'})
         } else {
-          alert("invalid credential");
+          showAlert({type:'danger',message:'invalid credentail'})
         }
       }
 
     } catch (error) {
       console.log(error.message);
+      showAlert({type:'danger',message:'invalid credentail'})
     }
 
   }
