@@ -29,12 +29,14 @@ export default function Login() {
             })
 
             const jsondata = await res.json();
-            alert("invalid credential");
             console.log(jsondata)
             if(jsondata.success){
                 localStorage.setItem('token',jsondata.authtoken)
                 navigate('/');
+            }else{
+                alert("invalid credential");
             }
+            
 
         } catch (error) {
             console.log(error.message);
