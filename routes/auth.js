@@ -14,17 +14,18 @@ router.post('/createuser', [
   body('email', 'enter valid and unique email').isEmail(),
   body('password').isLength({ min: 5 })
 ],
+async (req, res) => {
 
-  async (req, res) => {
+    let success = false;
 
     console.log(req.body);
     //res.send(req.body);
     //res.json({requestBody: req.body}) 
     const errors = validationResult(req);
-    if (!errors.isEmpty()) return res.status(400).send({ errors: errors.array() })
+    if (!errors.isEmpty()) return res.status(400).send({ success,errors: errors.array() })
 
     let email = await User.findOne({ email: req.body.email });
-    if (email) return res.status(400).send({ error: "duplicate email is not allow" })
+    if (email) return res.status(400).send({ success,error: "duplicate email is not allow" })
 
     try {
 
@@ -45,7 +46,7 @@ router.post('/createuser', [
       const authtoken = jwt.sign(data, jwt_secret);
       //console.log(token);
 
-      res.json({ authtoken });
+      res.json({ success:true,authtoken });
 
     } catch (err) {
       return res.status(400).send(err.message)
