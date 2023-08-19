@@ -61,24 +61,26 @@ router.post('/login', [
 ],
   async (req, res) => {
 
+    let success = false;
+
     const { email, password } = req.body;
 
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      res.status(400).send({ error: errors.array() })
+      res.status(400).send({ success,error: errors.array() })
     }
 
     try {
 
       const userModel = await User.findOne({ email: email });
       if (!userModel) {
-        res.status(400).json({ error: "check email credential properly" });
+        res.status(400).json({ success,error: "check email credential properly" });
       }
 
       const passwordCompare = await bcrypt.compare(password, userModel.password);
       if (!passwordCompare) {
-        res.status(400).json({ error: "check password credential properly" });
+        res.status(400).json({ success,error: "check password credential properly" });
       }
 
 
@@ -88,7 +90,7 @@ router.post('/login', [
         }
       }
       const authtoken = jwt.sign(data, jwt_secret);
-      res.json({ authtoken });
+      res.json({ success:true,authtoken });
 
     } catch (err) {
       res.status(400).send(err.message)
