@@ -16,7 +16,7 @@ function Noteitem(props) {
                         <i className="bi bi-trash mx-2" onClick={()=>deleteNote(note._id)}></i>
                         <i className="bi bi-pencil-fill mx-2" onClick={()=>editModel(note)} data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
                     </div>
-                    <p className="card-text">{note.description} Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <p className="card-text">{note.description}</p>
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@ import AddNotes from "./AddNotes"
 import Noteitem from './Noteitem';
 
 
-export default function Notes() {
+export default function Notes(props) {
 
     const context = useContext(noteContext);
 
@@ -32,6 +32,8 @@ export default function Notes() {
 
         //send all data to editNote Funtion end point in NoteState.js
         editNotefunc(editNote);
+
+        props.showAlert({type:'success',message:'Updated successfully'})
     }
 
     const editModel = (data) => {
@@ -42,7 +44,7 @@ export default function Notes() {
     return (
         <div>
             <div className='container mt-4'>
-                <AddNotes />
+                <AddNotes showAlert={props.showAlert}/>
                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">

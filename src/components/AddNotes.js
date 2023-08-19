@@ -1,7 +1,10 @@
 import React, { useContext, useState, useRef } from 'react'
 import noteContext from '../context/notes/noteContext';
 
-export default function AddNotes() {
+export default function AddNotes(props) {
+
+    //destructuring props
+    const {showAlert} = props
 
     const formRef = useRef(null)
 
@@ -37,6 +40,7 @@ export default function AddNotes() {
         //Send all form data to funtion addNote() that we set on NoteState.js
         addNote(input);
         formRef.current.reset();
+        showAlert({type:'success',message:'Created Note successfully'})
     }
 
     return (
