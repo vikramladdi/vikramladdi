@@ -51,7 +51,8 @@ export default function Signup(props) {
   }
 
   return (
-    <div className='container'>
+    <div className='container mt-4'>
+      <h1 className='text-center'>Please SIngup to Create Own Notes</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name</label>

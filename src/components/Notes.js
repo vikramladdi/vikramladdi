@@ -34,6 +34,7 @@ export default function Notes(props) {
         editNotefunc(editNote);
 
         props.showAlert({type:'success',message:'Updated successfully'})
+
     }
 
     const editModel = (data) => {
@@ -79,9 +80,9 @@ export default function Notes(props) {
             <div className='container'>
                 <div className='row'>
                     <h2 className='mt-4'>All notes..</h2>
-                    {notes.map((notes) => {
+                    {notes.length>0 ? notes.map((notes) => {
                         return <Noteitem key={notes._id} editModel={editModel} note={notes} />
-                    })}
+                    }):"No notes to display"}
                 </div>
             </div>
         </div>

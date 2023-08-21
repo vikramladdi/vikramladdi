@@ -35,7 +35,7 @@ export default function Login(props) {
             if(jsondata.success){
                 localStorage.setItem('token',jsondata.authtoken)
                 navigate('/');
-                showAlert({type:'success',message:'Login successfully'})
+                showAlert({type:'success',message:'Login successfully'});
             }else{
                // alert("invalid credential");
                 showAlert({type:'danger',message:'invalid credentail'})
@@ -51,7 +51,8 @@ export default function Login(props) {
 
     return (
         <div>
-            <div className='container'>
+            <div className='container mt-4'>
+                <h3 className='text-center'>Please Login to Create New Notes and Display Own Notes</h3>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="email">Email address</label>
