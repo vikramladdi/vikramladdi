@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import { useNavigate } from "react-router-dom";
+const { REACT_APP_API_URL } = process.env;
 
 export default function Login(props) {
 
@@ -16,13 +17,16 @@ export default function Login(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log(credentail)
+       // console.log(REACT_APP_API_URL)
+
+        const Url = REACT_APP_API_URL+'/api/auth/login';
 
         try {
-            const res = await fetch('http://localhost:5000/api/auth/login', {
+            const res = await fetch(Url, {
                 method: 'POST',
                 headers: {
-                    'Content-type': 'application/json'
+                    'Content-type': 'application/json',
+                    'Access-Control-Allow-Origin':'*'
                 },
                 body: JSON.stringify({
                     email: credentail.email,
